@@ -32,6 +32,11 @@ async function resetPwdWithShortToken (options, resetShortToken, identifyUser, p
 
 async function resetPassword (options, query, tokens, password, field) {
   debug('resetPassword', query, tokens, password);
+  debug('resetPassword', 'query', query);
+  
+  debug('resetPassword', 'tokens', tokens);
+  
+  debug('resetPassword', 'password', password);
   const usersService = options.app.service(options.service);
   const usersServiceIdName = usersService.id;
   const promises = [];
@@ -50,6 +55,9 @@ async function resetPassword (options, query, tokens, password, field) {
 
   const checkProps = options.skipIsVerifiedCheck ? ['resetNotExpired'] : ['resetNotExpired', 'isVerified'];
   const user1 = getUserData(users, checkProps);
+  
+  
+  debug('resetPassword', 'user1', user1);
 
   Object.keys(tokens).forEach(key => {
     promises.push(
@@ -67,6 +75,7 @@ async function resetPassword (options, query, tokens, password, field) {
   try {
     await Promise.all(promises);
   } catch (err) {
+    debug('resetPassword', 'err', err);
     await usersService.patch(user1[usersServiceIdName], {
       resetToken: null,
       resetShortToken: null,

@@ -61,7 +61,7 @@ async function resetPassword (options, query, tokens, password, field) {
 
   Object.keys(tokens).forEach(key => {
     debug('resetPassword', 'key', key);
-    debug('resetPassword', 'comparePasswords', tokens[key], user1[key);
+    debug('resetPassword', 'comparePasswords', tokens[key], user1[key]);
     promises.push(
       comparePasswords(
         tokens[key],

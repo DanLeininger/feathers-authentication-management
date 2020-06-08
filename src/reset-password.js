@@ -66,10 +66,12 @@ async function resetPassword (options, query, tokens, password, field) {
       comparePasswords(
         tokens[key],
         user1[key],
-        () =>
-          new errors.BadRequest('Reset Token is incorrect. (authLocalMgnt)', {
+        (err) => {
+          debug('resetPassword', 'errz', err);
+          return new errors.BadRequest('Reset Token is incorrect. (authLocalMgnt)', {
             errors: { $className: 'incorrectToken' }
           })
+        }
       )
     );
   });
